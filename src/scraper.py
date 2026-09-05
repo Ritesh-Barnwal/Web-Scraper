@@ -1,37 +1,48 @@
 import requests
 from bs4 import BeautifulSoup
 
-html = """
-<html>
-    <body>
-        <h1>My Products</h1>
+from config import (
+    URL,
+    BOOK_SELECTOR,
+    TITLE_SELECTOR,
+    PRICE_SELECTOR,
+    RATING_SELECTOR
+)
 
-        <div class="product">
-            <h2>iPhone</h2>
-            <p class="price">₹70,000</p>
-        </div>
+def scrape_books(url):
+    try:
+        response = requests.get(url, timeout=10)
+        response.raise_for_status()
+    except requests.RequestException as error:
+        print(f"Error fetching webpage: {error}")
+        return []
 
-        <div class="product">
-            <h2>Samsung</h2>
-            <p class="price">₹60,000</p>
-        </div>
+# or just use this below one line
+    # response = requests.get(url)
 
-        <div class="product">
-            <h2>Pixel</h2>
-            <p class="price">₹50,000</p>
-        </div>
-    </body>
-</html>
-"""
+    soup = BeautifulSoup(response.text, "html.parser")
+
+    books = soup.select(BOOK_SELECTOR)
+
+    scraped_data = []
+
+    for book in books:
+        title = book.select_one(TITLE_SELECTOR).get_text(strip=True)
+        price = book.select_one(PRICE_SELECTOR).get_text(strip=True)
+        rating = book.select_one(RATING_SELECTOR)["class"][-1]
+
+        scraped_data.append({
+            "title": title,
+            "price": price,
+            "rating": rating
+        })
+
+    return scraped_data
 
 
-soup = BeautifulSoup(html, "html.parser")
+if __name__ == "__main__":
+    books = scrape_books(URL)
 
-products = soup.find_all("div", class_="product")
+    for book in books:
+        print(book)
 
-for product in products:
-    name = product.find("h2").get_text(strip=True)
-    price = product.find("p", class_="price").get_text(strip=True)
-
-    print("Product:", name)
-    print("Price:", price)
