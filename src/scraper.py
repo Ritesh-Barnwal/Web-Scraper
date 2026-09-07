@@ -11,6 +11,18 @@ from src.config import (
     LINK_SELECTOR
 )
 
+import csv
+
+def save_to_csv(data, filename):
+    with open(filename, "w", newline="", encoding="utf-8") as file:
+        writer = csv.DictWriter(
+            file,
+            fieldnames=["title", "price", "rating", "link"]
+        )
+
+        writer.writeheader()
+        writer.writerows(data)
+
 def scrape_books(url):
     scraped_data = []
     page_number = 1
@@ -52,8 +64,6 @@ def scrape_books(url):
 
         next_button = soup.select_one("li.next a")
 
-        next_button = soup.select_one("li.next a")
-
         if next_button:
             next_page = next_button["href"]
             url = urljoin(url, next_page)
@@ -66,6 +76,8 @@ def scrape_books(url):
 
 if __name__ == "__main__":
     books = scrape_books(URL)
+
+    save_to_csv(books, "books.csv")
 
     for book in books:
         print(book)
