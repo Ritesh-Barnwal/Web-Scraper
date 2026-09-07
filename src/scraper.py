@@ -23,11 +23,11 @@ def save_to_csv(data, filename):
         writer.writeheader()
         writer.writerows(data)
 
-def scrape_books(url):
+def scrape_books(url, pages):
     scraped_data = []
     page_number = 1
 
-    while url:
+    while url and page_number <= pages:
         print(f"Scraping page {page_number}...")
         try:
             response = requests.get(url, timeout=10)
@@ -75,7 +75,10 @@ def scrape_books(url):
     return scraped_data
 
 if __name__ == "__main__":
-    books = scrape_books(URL)
+    url = input("Enter webpage URL: ")
+    pages = int(input("Enter number of pages: "))
+
+    books = scrape_books(url, pages)
 
     save_to_csv(books, "books.csv")
 
