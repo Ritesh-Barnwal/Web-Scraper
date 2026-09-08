@@ -117,3 +117,4 @@ Solution: Added exception handling using requests.RequestException.
 By the end of Week 1, the scraper can automatically navigate through
 multiple pages of Books to Scrape and collect structured book information.
 
+python -m src.scraper --url https://books.toscrape.com/ --pages 5

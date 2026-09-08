@@ -1,6 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 from urllib.parse import urljoin
+import argparse # For CLI (W2 D3)
 
 from src.config import (
     URL,
@@ -37,6 +38,9 @@ def scrape_books(url, pages):
             break
 
         soup = BeautifulSoup(response.text, "html.parser")
+        if "captcha" in response.text.lower():
+            print("CAPTCHA detected. Scraping stopped.")
+        break
 
         books = soup.select(BOOK_SELECTOR)
 
@@ -75,8 +79,16 @@ def scrape_books(url, pages):
     return scraped_data
 
 if __name__ == "__main__":
-    url = input("Enter webpage URL: ")
-    pages = int(input("Enter number of pages: "))
+    parser = argparse.ArgumentParser(description="Web Scraper CLI")
+    parser.add_argument("--url", required=True, help="URL to scrape")
+    parser.add_argument("--pages", type=int, default=1, help="Number of pages to scrape")
+
+    args = parser.parse_args()
+    url = args.url
+    pages = args.pages
+    
+    # url = input("Enter webpage URL: ")
+    # pages = int(input("Enter number of pages: "))
 
     books = scrape_books(url, pages)
 
