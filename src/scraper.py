@@ -1,11 +1,12 @@
+import argparse
+import csv
 import time
+from urllib.parse import urljoin
+
 import requests
 from bs4 import BeautifulSoup
-from urllib.parse import urljoin
-import argparse # For CLI (W2 D3)
 
 from src.config import (
-    URL,
     BOOK_SELECTOR,
     TITLE_SELECTOR,
     PRICE_SELECTOR,
@@ -13,7 +14,6 @@ from src.config import (
     LINK_SELECTOR
 )
 
-import csv
 
 def save_to_csv(data, filename):
     with open(filename, "w", newline="", encoding="utf-8") as file:
@@ -25,6 +25,7 @@ def save_to_csv(data, filename):
         writer.writeheader()
         writer.writerows(data)
 
+
 def scrape_books(url, pages):
     scraped_data = []
     page_number = 1
@@ -32,15 +33,17 @@ def scrape_books(url, pages):
 
     while url and page_number <= pages:
         print(f"Scraping page {page_number}...")
+
         try:
             response = session.get(url, timeout=10)
             response.raise_for_status()
+
         except requests.RequestException as error:
             print(f"Error fetching webpage: {error}")
             break
 
         soup = BeautifulSoup(response.text, "html.parser")
-        
+
         if "captcha" in response.text.lower():
             print("CAPTCHA detected. Scraping stopped.")
             break
@@ -53,7 +56,12 @@ def scrape_books(url, pages):
             rating_element = book.select_one(RATING_SELECTOR)
             link_element = book.select_one(LINK_SELECTOR)
 
-            if not title_element or not price_element or not rating_element or not link_element:
+            if (
+                not title_element
+                or not price_element
+                or not rating_element
+                or not link_element
+            ):
                 print("Skipping book because some data is missing.")
                 continue
 
@@ -75,31 +83,48 @@ def scrape_books(url, pages):
             next_page = next_button["href"]
             url = urljoin(url, next_page)
         else:
-            url = None    
+            url = None
 
         page_number += 1
-        
+
     return scraped_data
 
+
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Web Scraper CLI")
-    parser.add_argument("--url", required=True, help="URL to scrape")
-    parser.add_argument("--pages", type=int, default=1, help="Number of pages to scrape")
+    parser = argparse.ArgumentParser(
+        description="Web Scraper CLI"
+    )
+
+    parser.add_argument(
+        "--url",
+        required=True,
+        help="URL to scrape"
+    )
+
+    parser.add_argument(
+        "--pages",
+        type=int,
+        default=1,
+        help="Number of pages to scrape"
+    )
 
     args = parser.parse_args()
+
     url = args.url
     pages = args.pages
-    
-    # url = input("Enter webpage URL: ")
-    # pages = int(input("Enter number of pages: "))
 
     start_time = time.time()
+
     books = scrape_books(url, pages)
 
     save_to_csv(books, "books.csv")
+
     end_time = time.time()
 
-    print(f"Total execution time: {end_time - start_time:.2f} seconds")
+    print(
+        f"Total execution time: "
+        f"{end_time - start_time:.2f} seconds"
+    )
 
     for book in books:
         print(book)
