@@ -1,3 +1,4 @@
+import time
 import requests
 from bs4 import BeautifulSoup
 from urllib.parse import urljoin
@@ -27,11 +28,12 @@ def save_to_csv(data, filename):
 def scrape_books(url, pages):
     scraped_data = []
     page_number = 1
+    session = requests.Session()
 
     while url and page_number <= pages:
         print(f"Scraping page {page_number}...")
         try:
-            response = requests.get(url, timeout=10)
+            response = session.get(url, timeout=10)
             response.raise_for_status()
         except requests.RequestException as error:
             print(f"Error fetching webpage: {error}")
@@ -91,9 +93,13 @@ if __name__ == "__main__":
     # url = input("Enter webpage URL: ")
     # pages = int(input("Enter number of pages: "))
 
+    start_time = time.time()
     books = scrape_books(url, pages)
 
     save_to_csv(books, "books.csv")
+    end_time = time.time()
+
+    print(f"Total execution time: {end_time - start_time:.2f} seconds")
 
     for book in books:
         print(book)
