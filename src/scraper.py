@@ -38,9 +38,10 @@ def scrape_books(url, pages):
             break
 
         soup = BeautifulSoup(response.text, "html.parser")
+        
         if "captcha" in response.text.lower():
             print("CAPTCHA detected. Scraping stopped.")
-        break
+            break
 
         books = soup.select(BOOK_SELECTOR)
 
