@@ -135,6 +135,10 @@ if __name__ == "__main__":
 
     books = scrape_books(url, pages)
 
+    print("Scraping completed successfully!")
+    print(f"Books scraped: {len(books)}")
+    print("Data saved to: books.csv")
+
     save_to_csv(books, "books.csv")
 
     end_time = time.time()
@@ -143,6 +147,3 @@ if __name__ == "__main__":
         f"Total execution time: "
         f"{end_time - start_time:.2f} seconds"
     )
-
-    for book in books:
-        print(book)
