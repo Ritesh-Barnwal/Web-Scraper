@@ -1,3 +1,4 @@
+from concurrent.futures import ThreadPoolExecutor
 import argparse
 import csv
 import time
@@ -25,6 +26,15 @@ def save_to_csv(data, filename):
         writer.writeheader()
         writer.writerows(data)
 
+def fetch_page(url):
+    response = requests.get(url, timeout=10)
+    response.raise_for_status()
+    return response.text
+
+def fetch_pages(urls):
+    with ThreadPoolExecutor(max_workers=5) as executor:
+        pages = list(executor.map(fetch_page, urls))
+    return pages
 
 def scrape_books(url, pages):
     scraped_data = []
