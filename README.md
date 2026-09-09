@@ -1,56 +1,45 @@
 # Web Scraper
 
+A Python-based web scraper that extracts structured book information
+from webpages and stores the collected data in CSV format.
+
 ## Project Goal
 
-Build a Python-based web scraper that can automatically collect
-useful information from webpages and organize the extracted data.
+The goal of this project is to build a practical web scraper that can
+automatically collect useful information from webpages, handle common
+errors, support multiple pages, and organize the extracted data.
 
-## Requirements
+## Technologies Used
 
 - Python
 - Requests
 - BeautifulSoup
-- HTML parsing
-- Data extraction
-- Data storage
+- Selenium
+- CSV
+- Pytest
+- ThreadPoolExecutor
 
-## How to Run
+## Features
 
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/Ritesh-Barnwal/Web-Scraper.git
-
-2. Navigate to the project directory:
-  cd Web-Scrapper
-
-3. Create and activate a virtual environment:
-  python3 -m venv .venv
-  source .venv/bin/activate
-
-4. Install the required dependencies:
-  pip install -r requirements.txt
-
-5. Run the Scraper:
-  python -m src.scraper
-
-# Data Source
-
-This project uses Books to Scrape as
-the data source for practicing web scraping.
-
-# \Scraping Targets
-
-The scraper collects the following information from each book:
-
-Book title
-Price
-Rating
-Book link
+- Scrapes book information from Books to Scrape.
+- Extracts book title, price, rating, and link.
+- Supports scraping multiple pages.
+- Handles request and network errors.
+- Handles missing webpage data.
+- Detects CAPTCHA pages and stops scraping.
+- Saves scraped data into a CSV file.
+- Provides a command-line interface using argparse.
+- Supports JavaScript-rendered webpages using Selenium.
+- Uses logging to record scraping activity and errors.
+- Uses multi-threading support for concurrent webpage requests.
+- Includes basic automated testing using pytest.
+- Measures total execution time.
 
 ## Data Source
 
-This project uses [Books to Scrape](https://books.toscrape.com/) as
-the data source for practicing web scraping.
+This project uses
+[Books to Scrape](https://books.toscrape.com/)
+as the data source for practicing web scraping.
 
 ## Scraping Targets
 
@@ -59,62 +48,157 @@ The scraper collects the following information from each book:
 - Book title
 - Price
 - Rating
+- Book link
 
-# Week 1 Progress
+## Project Structure
 
-## Progress
 
-During Week 1, I built the basic structure of a Python web scraper using
-Requests and BeautifulSoup.
+Web-Scrapper/
+├── src/
+│   ├── __init__.py
+│   ├── config.py
+│   ├── scraper.py
+│   └── javascript_scraper.py
+├── tests/
+│   └── test_scrapper.py
+├── Notes/
+│   └── web_scraping_notes.md
+├── README.md
+├── requirements.txt
+├── books.csv
+└── .gitignore 
 
-Completed work:
-- Set up the Python development environment.
-- Learned the basics of BeautifulSoup and HTML parsing.
-- Created a scraper to extract book information.
-- Extracted book title, price, rating, and link.
-- Added error handling for failed requests.
-- Added handling for missing data.
-- Added pagination to scrape multiple webpages.
-- Tested the scraper with valid and invalid URLs.
-- Added basic automated tests using pytest.
-- Improved repeated requests using requests.Session().
-- Updated the README with project setup and usage instructions.
 
-## Challenges
+### Installation
 
-# 1. Import Error
+1. Clone the repository
+git clone https://github.com/Ritesh-Barnwal/Web-Scraper.git
+2. Navigate to the project directory
+cd Web-Scrapper
+3. Create a virtual environment
+python3 -m venv .venv
+4. Activate the virtual environment
+source .venv/bin/activate
+5. Install dependencies
+pip install -r requirements.txt
+Usage
 
-Initially, the project had an import error because the project structure
-was not being recognized correctly.
-
-**Solution:** Used `src` as a Python package and ran the scraper with:
-
-<!-- ```bash
-python -m src.scraper -->
-
-# 2. Pagination URL Error
-
-The scraper initially created an incorrect URL containing catalogue
-twice when moving to the next page.
-
-Solution: Used urljoin() to correctly construct the next-page URL.
-
-# 3. Missing Data
-
-Some webpage elements could potentially be missing.
-
-Solution: Added checks before extracting the required information and
-skip the book if required data is missing.
-
-# 4. Request Errors
-
-Web requests can fail because of invalid URLs or network problems.
-
-Solution: Added exception handling using requests.RequestException.
-
-### Week 1 Outcome
-
-By the end of Week 1, the scraper can automatically navigate through
-multiple pages of Books to Scrape and collect structured book information.
+Run the scraper using:
 
 python -m src.scraper --url https://books.toscrape.com/ --pages 5
+Command-line arguments
+
+--url
+
+The URL of the website to scrape.
+
+Example:
+
+--url https://books.toscrape.com/
+
+--pages
+
+The number of pages to scrape.
+
+Example:
+
+--pages 5
+
+The number of pages must be at least 1.
+
+Output
+
+The scraped data is stored in:
+
+books.csv
+
+The CSV file contains:
+
+title
+price
+rating
+link
+Logging
+
+The scraper records important activities and errors in:
+
+scraper.log
+
+The log contains information such as:
+
+Pages being scraped
+Request errors
+CAPTCHA detection
+Missing book data
+Timestamps
+Logging levels
+JavaScript Pages
+
+Some webpages load their content using JavaScript, which may not be
+available in the initial HTML response.
+
+For such pages, Selenium is used to load the webpage in a browser and
+retrieve the rendered HTML.
+
+The JavaScript scraper is located at:
+
+src/javascript_scraper.py
+Testing
+
+The project includes automated tests using pytest.
+
+Run the tests with:
+
+python -m pytest
+Performance
+
+The project includes support for concurrent webpage requests using
+Python's ThreadPoolExecutor.
+
+This allows multiple webpage requests to be handled concurrently when
+using the multi-threaded fetching functionality.
+
+Error Handling
+
+The scraper handles several common problems:
+
+Invalid URLs
+Network/request failures
+Missing webpage elements
+Invalid page numbers
+Empty scraping results
+CAPTCHA detection
+
+### Project Progress
+
+# Week 1
+Set up the Python development environment.
+Created the basic scraper.
+Learned Requests and BeautifulSoup.
+Extracted book title, price, rating, and link.
+Added error handling.
+Added missing-data handling.
+Added pagination.
+Added automated testing.
+Added requests.Session() for repeated requests.
+
+# Week 2
+Added CSV data storage.
+Added command-line arguments using argparse.
+Added CAPTCHA detection.
+Added automated testing.
+Improved request performance.
+Refactored the scraper for better readability.
+
+# Week 3
+Added Selenium support for JavaScript-rendered webpages.
+Added multi-threaded webpage fetching support.
+Conducted user testing and gathered feedback.
+Improved error handling.
+Improved command-line output.
+Added logging and monitoring.
+Updated project documentation and README.
+
+### Author
+
+Ritesh Kumar Barnwal
