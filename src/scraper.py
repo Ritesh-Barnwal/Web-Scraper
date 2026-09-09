@@ -60,6 +60,10 @@ def scrape_books(url, pages):
 
         books = soup.select(BOOK_SELECTOR)
 
+        if not books:
+                print("No books found on the webpage.")
+                break
+
         for book in books:
             title_element = book.select_one(TITLE_SELECTOR)
             price_element = book.select_one(PRICE_SELECTOR)
