@@ -123,6 +123,10 @@ if __name__ == "__main__":
     url = args.url
     pages = args.pages
 
+    if pages < 1:
+        print("Error: pages must be at least 1.")
+        exit()
+
     start_time = time.time()
 
     books = scrape_books(url, pages)
