@@ -2,10 +2,19 @@ from concurrent.futures import ThreadPoolExecutor
 import argparse
 import csv
 import time
+import logging
 from urllib.parse import urljoin
 
 import requests
 from bs4 import BeautifulSoup
+
+logging.basicConfig(
+    filename="scraper.log",
+    level=logging.INFO,
+    format="%(asctime)s - %(levelname)s - %(message)s"
+)
+
+logger = logging.getLogger(__name__)
 
 from src.config import (
     BOOK_SELECTOR,
@@ -42,26 +51,26 @@ def scrape_books(url, pages):
     session = requests.Session()
 
     while url and page_number <= pages:
-        print(f"Scraping page {page_number}...")
+        logger.info(f"Scraping page {page_number}...")
 
         try:
             response = session.get(url, timeout=10)
             response.raise_for_status()
 
         except requests.RequestException as error:
-            print(f"Error fetching webpage: {error}")
+            logger.error(f"Error fetching webpage: {error}")
             break
 
         soup = BeautifulSoup(response.text, "html.parser")
 
         if "captcha" in response.text.lower():
-            print("CAPTCHA detected. Scraping stopped.")
+            logger.warning("CAPTCHA detected. Scraping stopped.")
             break
 
         books = soup.select(BOOK_SELECTOR)
 
         if not books:
-                print("No books found on the webpage.")
+                logger.warning("No books found on the webpage.")
                 break
 
         for book in books:
@@ -76,7 +85,7 @@ def scrape_books(url, pages):
                 or not rating_element
                 or not link_element
             ):
-                print("Skipping book because some data is missing.")
+                logger.warning("Skipping book because some data is missing.")
                 continue
 
             title = title_element.get_text(strip=True)
