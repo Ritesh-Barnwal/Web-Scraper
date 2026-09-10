@@ -156,3 +156,4 @@ if __name__ == "__main__":
         f"Total execution time: "
         f"{end_time - start_time:.2f} seconds"
     )
+    
