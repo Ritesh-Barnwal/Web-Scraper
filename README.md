@@ -52,7 +52,7 @@ The scraper collects the following information from each book:
 
 ## Project Structure
 
-
+```
 Web-Scrapper/
 ├── src/
 │   ├── __init__.py
@@ -67,10 +67,11 @@ Web-Scrapper/
 ├── requirements.txt
 ├── books.csv
 └── .gitignore 
-
+```
 
 ### Installation
 
+```
 1. Clone the repository
 git clone https://github.com/Ritesh-Barnwal/Web-Scraper.git
 2. Navigate to the project directory
@@ -81,7 +82,7 @@ python3 -m venv .venv
 source .venv/bin/activate
 5. Install dependencies
 pip install -r requirements.txt
-Usage
+```
 
 ## Run the scraper using:
 
