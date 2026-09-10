@@ -83,7 +83,7 @@ source .venv/bin/activate
 pip install -r requirements.txt
 Usage
 
-Run the scraper using:
+## Run the scraper using:
 
 python -m src.scraper --url https://books.toscrape.com/ --pages 5
 Command-line arguments
@@ -112,45 +112,45 @@ The scraped data is stored in:
 
 books.csv
 
-The CSV file contains:
+## The CSV file contains:
 
-title
-price
-rating
-link
-Logging
+-title
+-rating
+-price
+-link
+-Logging
 
 The scraper records important activities and errors in:
 
 scraper.log
 
-The log contains information such as:
+## The log contains information such as:
 
-Pages being scraped
-Request errors
-CAPTCHA detection
-Missing book data
-Timestamps
-Logging levels
-JavaScript Pages
+-Request errors
+-Pages being scraped
+-CAPTCHA detection
+-Missing book data
+-Timestamps
+-Logging levels
+-JavaScript Pages
 
-Some webpages load their content using JavaScript, which may not be
-available in the initial HTML response.
+Some webpages load their content using JavaScript, which may not be available in the initial HTML response.
 
-For such pages, Selenium is used to load the webpage in a browser and
-retrieve the rendered HTML.
+For such pages, Selenium is used to load the webpage in a browser and retrieve the rendered HTML.
 
 The JavaScript scraper is located at:
 
 src/javascript_scraper.py
-Testing
+
+## Testing
 
 The project includes automated tests using pytest.
 
 Run the tests with:
 
 python -m pytest
-Performance
+
+## Performance
 
 The project includes support for concurrent webpage requests using
 Python's ThreadPoolExecutor.
@@ -158,16 +158,37 @@ Python's ThreadPoolExecutor.
 This allows multiple webpage requests to be handled concurrently when
 using the multi-threaded fetching functionality.
 
-Error Handling
+## Deployment
+
+The Web Scraper is deployed using GitHub Actions.
+
+The workflow runs the scraper in a GitHub-hosted Ubuntu environment and
+automatically:
+
+- Checks out the project repository.
+- Sets up Python 3.13.
+- Installs project dependencies.
+- Runs the scraper.
+- Uploads the generated `books.csv` and `scraper.log` files as workflow artifacts.
+
+The GitHub Actions workflow is located at:
+
+`.github/workflows/scraper.yml`
+
+The workflow can be manually triggered from the GitHub Actions tab.
+
+## Error Handling
 
 The scraper handles several common problems:
 
-Invalid URLs
-Network/request failures
-Missing webpage elements
-Invalid page numbers
-Empty scraping results
-CAPTCHA detection
+-Invalid URLs
+-Network/request failures
+-Missing webpage elements
+-Invalid page numbers
+-Empty scraping results
+-CAPTCHA detection
+
+
 
 ### Project Progress
 
@@ -196,8 +217,13 @@ Added multi-threaded webpage fetching support.
 Conducted user testing and gathered feedback.
 Improved error handling.
 Improved command-line output.
-Added logging and monitoring.
+Added logging for scraper activity and errors.
 Updated project documentation and README.
+
+# Week 4
+Deployed the Web Scraper using GitHub Actions.
+Configured scraper execution in a GitHub-hosted environment.
+Verified successful scraper execution and artifact generation.
 
 ### Author
 
