@@ -120,9 +120,7 @@ Output
 
 The scraped data is stored in:
 
-```bash
-books.csv
-```
+`books.csv`
 
 ### The CSV file contains:
 
@@ -136,9 +134,7 @@ books.csv
 
 The scraper records important activities and errors in:
 
-```bash
-scraper.log
-```
+`scraper.log`
 
 ### The log contains information such as:
 
@@ -156,9 +152,7 @@ For such pages, Selenium is used to load the webpage in a browser and retrieve t
 
 The JavaScript scraper is located at:
 
-```bash
-src/javascript_scraper.py
-```
+`src/javascript_scraper.py`
 
 ## Testing
 
@@ -172,8 +166,7 @@ python -m pytest
 
 ## Performance
 
-The project includes support for concurrent webpage requests using
-`Python's ThreadPoolExecutor.`
+The project includes support for concurrent webpage requests using `Python's ThreadPoolExecutor.`
 
 This allows multiple webpage requests to be handled concurrently when
 using the multi-threaded fetching functionality.
@@ -210,7 +203,7 @@ The scraper handles several common problems:
 
 
 
-`## Project Progress`
+## Project Progress
 
 # Week 1
 Set up the Python development environment.
