@@ -52,7 +52,7 @@ The scraper collects the following information from each book:
 
 ## Project Structure
 
-```
+```text
 Web-Scrapper/
 ├── src/
 │   ├── __init__.py
@@ -71,9 +71,11 @@ Web-Scrapper/
 
 ### Installation
 
-```
+
 1. Clone the repository
-git clone https://github.com/Ritesh-Barnwal/Web-Scraper.git
+```bash
+git clone https://github.com/Ritesh-Barnwal/Web-Scraper.git 
+```
 2. Navigate to the project directory
 cd Web-Scrapper
 3. Create a virtual environment
@@ -82,28 +84,35 @@ python3 -m venv .venv
 source .venv/bin/activate
 5. Install dependencies
 pip install -r requirements.txt
-```
+
 
 ## Run the scraper using:
 
+```bash
 python -m src.scraper --url https://books.toscrape.com/ --pages 5
-Command-line arguments
+```
 
---url
+## Command-line arguments
+
+### `--url`
 
 The URL of the website to scrape.
 
 Example:
 
+```bash
 --url https://books.toscrape.com/
+```
 
---pages
+### `--pages`
 
 The number of pages to scrape.
 
 Example:
 
+```bash
 --pages 5
+```
 
 The number of pages must be at least 1.
 
@@ -111,7 +120,9 @@ Output
 
 The scraped data is stored in:
 
+```text
 books.csv
+```
 
 ## The CSV file contains:
 
