@@ -124,13 +124,11 @@ The scraped data is stored in:
 
 ### The CSV file contains:
 
-```text
--title
--rating
--price
--link
--Logging
-```
+- title
+- rating
+- price
+- link
+- Logging
 
 The scraper records important activities and errors in:
 
