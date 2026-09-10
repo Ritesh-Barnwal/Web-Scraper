@@ -69,7 +69,7 @@ Web-Scrapper/
 └── .gitignore 
 ```
 
-### Installation
+## Installation
 
 
 1. Clone the repository
@@ -92,7 +92,7 @@ pip install -r requirements.txt
 python -m src.scraper --url https://books.toscrape.com/ --pages 5
 ```
 
-## Command-line arguments
+### Command-line arguments
 
 ### `--url`
 
@@ -120,31 +120,35 @@ Output
 
 The scraped data is stored in:
 
-```text
+```bash
 books.csv
 ```
 
-## The CSV file contains:
+### The CSV file contains:
 
+```text
 -title
 -rating
 -price
 -link
 -Logging
+```
 
 The scraper records important activities and errors in:
 
+```bash
 scraper.log
+```
 
-## The log contains information such as:
+### The log contains information such as:
 
--Request errors
--Pages being scraped
--CAPTCHA detection
--Missing book data
--Timestamps
--Logging levels
--JavaScript Pages
+- Request errors
+- Pages being scraped
+- CAPTCHA detection
+- Missing book data
+- Timestamps
+- Logging levels
+- JavaScript Pages
 
 Some webpages load their content using JavaScript, which may not be available in the initial HTML response.
 
@@ -152,7 +156,9 @@ For such pages, Selenium is used to load the webpage in a browser and retrieve t
 
 The JavaScript scraper is located at:
 
+```bash
 src/javascript_scraper.py
+```
 
 ## Testing
 
@@ -160,12 +166,14 @@ The project includes automated tests using pytest.
 
 Run the tests with:
 
+```bash
 python -m pytest
+```
 
 ## Performance
 
 The project includes support for concurrent webpage requests using
-Python's ThreadPoolExecutor.
+`Python's ThreadPoolExecutor.`
 
 This allows multiple webpage requests to be handled concurrently when
 using the multi-threaded fetching functionality.
@@ -193,16 +201,16 @@ The workflow can be manually triggered from the GitHub Actions tab.
 
 The scraper handles several common problems:
 
--Invalid URLs
--Network/request failures
--Missing webpage elements
--Invalid page numbers
--Empty scraping results
--CAPTCHA detection
+- Invalid URLs
+- Network/request failures
+- Missing webpage elements
+- Invalid page numbers
+- Empty scraping results
+- CAPTCHA detection
 
 
 
-### Project Progress
+`## Project Progress`
 
 # Week 1
 Set up the Python development environment.
@@ -239,4 +247,4 @@ Verified successful scraper execution and artifact generation.
 
 ### Author
 
-Ritesh Kumar Barnwal
+`Ritesh Kumar Barnwal`
